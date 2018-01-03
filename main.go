@@ -65,6 +65,71 @@ func HSLToRGB(h float32, s, v float32) (uint8, uint8, uint8) {
 	return r, g, b
 }
 
+/*
+esc,f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,
+grave,1,2,3,4,5,6,7,8,9,0,minus,tab,
+q,w,e,r,t,y,u,i,o,p,lbrace,caps,a,s,d,
+f,g,h,j,k,l,colon,quote,lshift,bslash_iso,
+z,x,c,v,b,n,m,comma,dot,slash,lctrl,lwin,
+lalt,space,katahira,ralt,rwin,rmenu,light,
+f12,prtscn,scroll,pause,rbrace,bslash,hash,
+enter,ro,equal,yen,bspace,rshift,rctrl,up,
+left,down,right,mute,muhenkan,henkan,fn,
+topbar1,topbar2,topbar3,topbar4,topbar5,
+topbar6,topbar7,topbar8,topbar9,topbar10,
+topbar11,topbar12,topbar13,topbar14,topbar15,
+topbar16,topbar17,topbar18,topbar19,logo,
+side,ins,del,home,end,pgup,pgdn,lock,volup,voldn
+*/
+
+const (
+	KeyEsc = iota
+	KeyF1
+	KeyF2
+	KeyF3
+	KeyF4
+	KeyF5
+	KeyF6
+	KeyF7
+	KeyF8
+	KeyF9
+	KeyF10
+	KeyF11
+	KeyF12
+	KeyPrintScreen
+	KeyScrollLock
+	KeyPauseBreak
+
+	KeyW
+	KeyA
+	KeyS
+	KeyD
+)
+
+var Keys = []string{
+	"esc",
+	"f1",
+	"f2",
+	"f3",
+	"f4",
+	"f5",
+	"f6",
+	"f7",
+	"f8",
+	"f9",
+	"f10",
+	"f11",
+	"f12",
+	"prtscn",
+	"scroll",
+	"pause",
+
+	"w",
+	"a",
+	"s",
+	"d",
+}
+
 func main() {
 	ckbCmd, err := os.OpenFile("/dev/input/ckb1/cmd", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
@@ -86,14 +151,33 @@ func main() {
 	}()
 
 	w := bufio.NewWriter(ckbCmd)
-	//r := bufio.NewReader(ckbNotify)
+	r := bufio.NewReader(ckbNotify)
+
+	w.WriteString("notify w a s d\n")
+	if err := w.Flush(); err != nil {
+		panic(err)
+	}
 
 	go func() {
+		for {
+			str, err := r.ReadString('\n')
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(str)
+
+			runtime.Gosched()
+		}
+	}()
+
+	go func() {
+		step := float32(360.0 / len(Keys))
 		offset := float32(0.0)
 		tick := time.Tick(17 * time.Millisecond)
 		for range tick {
-			for t := 0; t < 12; t++ {
-				h := float32(t)*(360.0/12.0) - offset
+			for t := 0; t < len(Keys); t++ {
+				h := float32(t)*step - offset
 				for h < 0 {
 					h += 360
 				}
@@ -107,7 +191,7 @@ func main() {
 				}
 
 				r, g, b := HSLToRGB(h, 1.0, 1.0)
-				cmd := fmt.Sprintf("rgb f%d:%02x%02x%02x,", t+1, r, g, b)
+				cmd := fmt.Sprintf("rgb %s:%02x%02x%02x,", Keys[t], r, g, b)
 				w.WriteString(cmd)
 			}
 
