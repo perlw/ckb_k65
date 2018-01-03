@@ -66,20 +66,18 @@ func HSLToRGB(h float32, s, v float32) (uint8, uint8, uint8) {
 }
 
 /*
-esc,f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,
-grave,1,2,3,4,5,6,7,8,9,0,minus,tab,
-q,w,e,r,t,y,u,i,o,p,lbrace,caps,a,s,d,
-f,g,h,j,k,l,colon,quote,lshift,bslash_iso,
-z,x,c,v,b,n,m,comma,dot,slash,lctrl,lwin,
+caps,a,s,d,f,g,h,j,k,l,colon,quote,hash
+lshift,bslash_iso, z,x,c,v,b,n,m,comma,dot,slash,rshift
+lctrl,lwin,
 lalt,space,katahira,ralt,rwin,rmenu,light,
-f12,prtscn,scroll,pause,rbrace,bslash,hash,
+rbrace,bslash,hash,
 enter,ro,equal,yen,bspace,rshift,rctrl,up,
 left,down,right,mute,muhenkan,henkan,fn,
 topbar1,topbar2,topbar3,topbar4,topbar5,
 topbar6,topbar7,topbar8,topbar9,topbar10,
 topbar11,topbar12,topbar13,topbar14,topbar15,
 topbar16,topbar17,topbar18,topbar19,logo,
-side,ins,del,home,end,pgup,pgdn,lock,volup,voldn
+side,del,end,pgdn,lock,volup,voldn
 */
 
 const (
@@ -99,8 +97,41 @@ const (
 	KeyPrintScreen
 	KeyScrollLock
 	KeyPauseBreak
-
+	KeyGrave
+	Key1
+	Key2
+	Key3
+	Key4
+	Key5
+	Key6
+	Key7
+	Key8
+	Key9
+	Key0
+	KeyMinus
+	KeyEqual
+	KeyBackSpace
+	KeyIns
+	KeyHome
+	KeyPageUp
+	KeyTab
+	KeyQ
 	KeyW
+	KeyE
+	KeyR
+	KeyT
+	KeyY
+	KeyU
+	KeyI
+	KeyO
+	KeyP
+	KeyLeftBrace
+	KeyRightBrace
+	KeyEnter
+	KeyDelete
+	KeyEnd
+	KeyPageDown
+
 	KeyA
 	KeyS
 	KeyD
@@ -123,8 +154,41 @@ var Keys = []string{
 	"prtscn",
 	"scroll",
 	"pause",
-
+	"grave",
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"0",
+	"minus",
+	"equal",
+	"bspace",
+	"ins",
+	"home",
+	"pgup",
+	"tab",
+	"q",
 	"w",
+	"e",
+	"r",
+	"t",
+	"y",
+	"u",
+	"i",
+	"o",
+	"p",
+	"lbrace",
+	"rbrace",
+	"enter",
+	"del",
+	"end",
+	"pgdn",
+
 	"a",
 	"s",
 	"d",
