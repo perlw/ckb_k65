@@ -66,22 +66,22 @@ func HSLToRGB(h float32, s, v float32) (uint8, uint8, uint8) {
 }
 
 /*
-caps,a,s,d,f,g,h,j,k,l,colon,quote,hash
-lshift,bslash_iso, z,x,c,v,b,n,m,comma,dot,slash,rshift
-lctrl,lwin,
-lalt,space,katahira,ralt,rwin,rmenu,light,
-rbrace,bslash,hash,
-enter,ro,equal,yen,bspace,rshift,rctrl,up,
-left,down,right,mute,muhenkan,henkan,fn,
-topbar1,topbar2,topbar3,topbar4,topbar5,
+mute,muhenkan,henkan,fn,topbar1,topbar2,topbar3,topbar4,topbar5,
 topbar6,topbar7,topbar8,topbar9,topbar10,
 topbar11,topbar12,topbar13,topbar14,topbar15,
 topbar16,topbar17,topbar18,topbar19,logo,
-side,del,end,pgdn,lock,volup,voldn
+side,volup,voldn,light
 */
 
 const (
-	KeyEsc = iota
+	// 0
+	KeyLight = iota
+	KeyMute
+	KeyVoldn
+	KeyVolup
+	KeyLock
+	// 1
+	KeyEsc
 	KeyF1
 	KeyF2
 	KeyF3
@@ -97,6 +97,7 @@ const (
 	KeyPrintScreen
 	KeyScrollLock
 	KeyPauseBreak
+	// 2
 	KeyGrave
 	Key1
 	Key2
@@ -114,6 +115,7 @@ const (
 	KeyIns
 	KeyHome
 	KeyPageUp
+	// 3
 	KeyTab
 	KeyQ
 	KeyW
@@ -131,13 +133,59 @@ const (
 	KeyDelete
 	KeyEnd
 	KeyPageDown
-
+	// 4
+	KeyCaps
 	KeyA
 	KeyS
 	KeyD
+	KeyF
+	KeyG
+	KeyH
+	KeyJ
+	KeyK
+	KeyL
+	KeyColon
+	KeyQuote
+	KeyHash
+	// 5
+	KeyLshift
+	KeyBslash_iso
+	KeyZ
+	KeyX
+	KeyC
+	KeyV
+	KeyB
+	KeyN
+	KeyM
+	KeyComma
+	KeyDot
+	KeySlash
+	KeyRshift
+	KeyUp
+	// 6
+	KeyLctrl
+	KeyLwin
+	KeyLalt
+	KeySpace
+	KeyKatahira
+	KeyRalt
+	KeyFn
+	KeyRwin
+	KeyRmenu
+	KeyRctrl
+	KeyLeft
+	KeyDown
+	KeyRight
 )
 
 var Keys = []string{
+	// 0
+	"light",
+	"mute",
+	"voldn",
+	"volup",
+	"lock",
+	// 1
 	"esc",
 	"f1",
 	"f2",
@@ -154,6 +202,7 @@ var Keys = []string{
 	"prtscn",
 	"scroll",
 	"pause",
+	// 2
 	"grave",
 	"1",
 	"2",
@@ -171,6 +220,7 @@ var Keys = []string{
 	"ins",
 	"home",
 	"pgup",
+	// 3
 	"tab",
 	"q",
 	"w",
@@ -188,10 +238,49 @@ var Keys = []string{
 	"del",
 	"end",
 	"pgdn",
-
+	// 4
+	"caps",
 	"a",
 	"s",
 	"d",
+	"f",
+	"g",
+	"h",
+	"j",
+	"k",
+	"l",
+	"colon",
+	"quote",
+	"hash",
+	// 5
+	"lshift",
+	"bslash_iso",
+	"z",
+	"x",
+	"c",
+	"v",
+	"b",
+	"n",
+	"m",
+	"comma",
+	"dot",
+	"slash",
+	"rshift",
+	"up",
+	// 6
+	"lctrl",
+	"lwin",
+	"lalt",
+	"space",
+	"katahira",
+	"ralt",
+	"fn",
+	"rwin",
+	"rmenu",
+	"rctrl",
+	"left",
+	"down",
+	"right",
 }
 
 func main() {
@@ -249,7 +338,7 @@ func main() {
 					h -= 360
 				}
 
-				offset += 0.5
+				offset += 0.05
 				if offset > 360 {
 					offset = 0
 				}
