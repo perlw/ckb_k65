@@ -65,14 +65,6 @@ func HSLToRGB(h float32, s, v float32) (uint8, uint8, uint8) {
 	return r, g, b
 }
 
-/*
-mute,muhenkan,henkan,fn,topbar1,topbar2,topbar3,topbar4,topbar5,
-topbar6,topbar7,topbar8,topbar9,topbar10,
-topbar11,topbar12,topbar13,topbar14,topbar15,
-topbar16,topbar17,topbar18,topbar19,logo,
-side,volup,voldn,light
-*/
-
 const (
 	// 0
 	KeyLight = iota
@@ -343,7 +335,7 @@ func main() {
 					offset = 0
 				}
 
-				r, g, b := HSLToRGB(h, 1.0, 1.0)
+				r, g, b := HSLToRGB(h, 1.0, 0.5)
 				cmd := fmt.Sprintf("rgb %s:%02x%02x%02x,", Keys[t], r, g, b)
 				w.WriteString(cmd)
 			}
@@ -360,4 +352,9 @@ func main() {
 
 	fmt.Println("ENTER to exit")
 	fmt.Scanln()
+
+	w.WriteString("notify all:off\n")
+	if err := w.Flush(); err != nil {
+		panic(err)
+	}
 }
